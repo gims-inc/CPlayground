@@ -1,0 +1,104 @@
+
+=======================================================================================================
+ptr++;    // Pointer moves to the next int position (as if it was an array)
+++ptr;    // Pointer moves to the next int position (as if it was an array)
+++*ptr;   // The value pointed at by ptr is incremented
+++(*ptr); // The value pointed at by ptr is incremented
+++*(ptr); // The value pointed at by ptr is incremented
+*ptr++;   // Pointer moves to the next int position (as if it was an array). But returns the old content
+(*ptr)++; // The value pointed at by ptr is incremented
+*(ptr)++; // Pointer moves to the next int position (as if it was an array). But returns the old content
+*++ptr;   // Pointer moves to the next int position, and then get's accessed, with your code, segfault
+*(++ptr); // Pointer moves to the next int position, and then get's accessed, with your code, segfault
+
+
+
+You don’t have to use the %p string.
+On most modern machines, you can use
+%li—although the compiler may give you
+a warning if you do.
+
+-----------------
+
+int x = 4;
+printf("x lives at %p\n", &x);
+
+-----------------
+
+int *address_of_x = &x;   | This is a pointer variable for an address that stores an int
+
+int value_stored = *address_of_x; | This will read the contents at the memory address given by address_of_x. This will be set to 4: the value originally stored in the x variable.
+
+*address_of_x = 99;  |  This will change the contents of the original x variable to 99.
+
+
+===========NOTE===========
+  Variables are allocated storage in memory.
+� The & operator finds the address of a variable.
+� Local variables live in the stack.�
+� Global variables live in the globals section.
+  The * operator can read the contents of a memory address.
+� The * operator can also set the contents of a memory address.
+� Pointers are just variables that store memory addresses.
+
+
+Is
+�An array variable can be used as a
+ pointer.
+�The sizeof operator returns the
+ space taken by a piece of data.
+�The array variable points to the first
+ element in the array.
+�You can also call sizeof for a data
+ type, such as sizeof(int).
+�If you declare an array argument
+ to a function, it will be treated as a
+ pointer.
+�sizeof(a pointer) returns
+ 4 on 32-bit operating systems and 8 on 64-bit.
+
+Is SIZEOF a function? No, it’s an operator.
+What’s the difference?
+An operator is compiled to a sequence of instructions by
+the compiler. But if the code calls a function, it has to jump to a
+separate piece of code.
+
+The compiler can determine the size of the storage at
+compile time.
+
+On 32-bit operating systems, a memory address is stored as
+a 32-bit number. That’s why it’s called a 32-bit system. 32 bits == 4
+bytes. That’s why a 64-bit system uses 8 bytes to store an address.
+
+1byte == 8bits
+
+
+
+
+
+#include <stdio.h>
+
+int main()
+{
+    int contestants[] = {1, 2, 3};   // An array of integers named 'contestants' with initial values 1, 2, and 3
+    int *choice = contestants;       // A pointer 'choice' is assigned the address of the 'contestants' array
+
+    contestants[0] = 2;              // Changing the value at index 0 of 'contestants' array to 2
+    contestants[1] = contestants[2]; // Setting the value at index 1 of 'contestants' array to the value at index 2
+    contestants[2] = *choice;        // Setting the value at index 2 of 'contestants' array to the value pointed by 'choice'
+
+    printf("I'm going to pick contestant number %i\n", contestants[2]); // Printing the value at index 2 of 'contestants' array
+    return 0;                        // Indicating successful execution of the program
+}
+
+
+?????????????????????????????????
+int doses[] = {1,2,3,1000};
+
+printf("Issue dose %i\n ", 3[doses]); 
+
+-----output-----
+
+Issue dose 1000
+
+

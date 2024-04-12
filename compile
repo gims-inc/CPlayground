@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Check if the correct number of arguments is provided
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 <C file(s)>"
+    exit 1
+fi
+
+# Loop through each provided C file
+for file in "$@"; do
+    # Check if the file has a ".c" extension
+    if [[ "$file" == *.c ]]; then
+        # Extract the file name without the extension
+        filename=$(basename "$file" .c)
+
+        # Compile the C file and create an executable with the file name
+        gcc "$file" -o "$filename"
+
+        # Check if the compilation was successful
+        if [ $? -eq 0 ]; then
+            echo "Compilation successful: $filename"
+        else
+            echo "Compilation failed: $filename"
+        fi
+    else
+        echo "Invalid file type: $file (must be a .c file)"
+    fi
+done
